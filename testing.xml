@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Diet And Fitness Planner Smoke Suite">
+    <listeners>
+        <listener class-name="org.testng.reporters.SuiteHTMLReporter" />
+        <listener class-name="org.testng.reporters.EmailableReporter2" />
+    </listeners>
+    <test name="Automation Execution Smoke Tests">
+        <classes>
+            <class name="tests.SmokeTestSuite"/>
+        </classes>
+    </test>
+</suite>
