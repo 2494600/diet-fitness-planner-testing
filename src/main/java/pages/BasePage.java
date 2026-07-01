@@ -53,13 +53,11 @@ public class BasePage {
         return driver.getCurrentUrl();
     }
 
-    // NEW: Prevents route transition collision bugs across navigation link tests
     public boolean waitForUrlToContain(String fraction) {
         return wait.until(ExpectedConditions.urlContains(fraction));
     }
 
     protected boolean waitForTextToChange(By locator, String oldText) {
-        // Safe execution threshold increased to 12s to comfortably clear the 5s app swap logic
         WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(12));
         return extendedWait.until(ExpectedConditions.not(ExpectedConditions.textToBe(locator, oldText)));
     }

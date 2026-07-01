@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class RegisterPage extends BasePage {
-
     private final By nameField = By.name("name");
     private final By phoneField = By.name("phone");
     private final By usernameField = By.name("username");
@@ -13,10 +12,8 @@ public class RegisterPage extends BasePage {
     private final By heightField = By.name("heightCm");
     private final By weightField = By.name("weightKg");
 
-    // RECTIFIED: Bulletproof XPaths that ignore layout whitespace additions and icon tags
     private final By maleButton = By.xpath("//button[contains(@class,'gender-btn')][contains(translate(., 'MALE', 'male'), 'male')]");
     private final By femaleButton = By.xpath("//button[contains(@class,'gender-btn')][contains(translate(., 'FEMALE', 'female'), 'female')]");
-
     private final By vegetarianButton = By.xpath("//button[contains(@class,'gender-btn')][contains(translate(., 'VEGETARIAN', 'vegetarian'), 'vegetarian')]");
     private final By nonVegButton = By.xpath("//button[contains(@class,'gender-btn')][contains(translate(., 'NON-VEG', 'non-veg'), 'non-veg')]");
 
@@ -46,17 +43,8 @@ public class RegisterPage extends BasePage {
         type(heightField, height);
         type(weightField, weight);
 
-        if (gender.equalsIgnoreCase("MALE")) {
-            click(maleButton);
-        } else {
-            click(femaleButton);
-        }
-
-        if (diet.equalsIgnoreCase("VEG") || diet.equalsIgnoreCase("VEGETARIAN")) {
-            click(vegetarianButton);
-        } else {
-            click(nonVegButton);
-        }
+        if (gender.equalsIgnoreCase("MALE")) { click(maleButton); } else { click(femaleButton); }
+        if (diet.equalsIgnoreCase("VEG") || diet.equalsIgnoreCase("VEGETARIAN")) { click(vegetarianButton); } else { click(nonVegButton); }
 
         switch (level.toUpperCase()) {
             case "BEGINNER" -> click(beginnerButton);
@@ -72,7 +60,5 @@ public class RegisterPage extends BasePage {
         }
     }
 
-    public void clickRegister() {
-        click(submitAccountButton);
-    }
+    public void clickRegister() { click(submitAccountButton); }
 }
