@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import pages.*;
+import utilities.ExcelReader;
 
 public class UserLifecycleSteps {
     private final WebDriver driver = Hooks.getDriver();
@@ -116,5 +117,18 @@ public class UserLifecycleSteps {
     public void verifyReturnToLanding() {
         Assert.assertTrue(landingPage.isHeroSectionVisible());
         Assert.assertEquals(driver.getCurrentUrl(), "https://diet-and-fitness-planner-5qhw.vercel.app/");
+    }
+
+    @When("I log in using excel user {string}")
+    public void loginUsingExcel(String rowNumber) {
+
+        String excelPath = "src/test/resources/testdata/LoginData.xlsx";
+
+        int row = Integer.parseInt(rowNumber);
+
+        String username = ExcelReader.getCellData(excelPath, row, 0);
+        String password = ExcelReader.getCellData(excelPath, row, 1);
+
+        loginPage.login(username, password);
     }
 }
