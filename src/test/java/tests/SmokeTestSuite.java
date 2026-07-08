@@ -1,27 +1,17 @@
 package tests;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import listeners.RetryAnalyzer;
+import listeners.TestListener;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 
-public class SmokeTestSuite {
-    private WebDriver driver;
+@Listeners(TestListener.class)
+public class SmokeTestSuite extends BaseTest{
     private final String baseUrl = "http://localhost:4200";
 
-    // RECTIFIED: Class-level shared variable to track the dynamically created user across tests
     private static String registeredUsername = "johndoe";
-
-    @BeforeMethod
-    public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
-        driver = new ChromeDriver(options);
-    }
 
     @Test(priority = 1, description = "SM_TC_01: Verify landing page loads with hero section and features.")
     public void testLandingPageLayout() {
@@ -59,7 +49,11 @@ public class SmokeTestSuite {
         Assert.assertTrue(dashboardPage.getCurrentPageUrl().contains("/dashboard"), "App failed to reach /dashboard.");
     }
 
-    @Test(priority = 4, description = "SM_TC_04: Verify registered user can log in.")
+    @Test(priority = 4,
+            description = "SM_TC_04: Verify registered user can log in.",
+            retryAnalyzer = RetryAnalyzer.class,
+            dependsOnMethods = {"testNewUserRegistration"}
+    )
     public void testRegisteredUserLogin() {
         driver.get(baseUrl + "/login");
         LoginPage loginPage = new LoginPage(driver);
@@ -80,19 +74,18 @@ public class SmokeTestSuite {
         DashboardPage dashboardPage = new DashboardPage(driver);
         dashboardPage.waitForUrlToContain("/dashboard");
 
-        // Assert basic page structure components are present
+        // Assertion of basic page structure components are present
         Assert.assertTrue(dashboardPage.isDashboardCompletelyLoaded(),
                 "CRITICAL FAILURE: Core dashboard widgets (Greeting, Quote, or BMI metric card) failed to render.");
 
-        // Assert specific parsed text data inside the HTML template
+        // Assertion of specific parsed text data inside the HTML template
         String greetingText = dashboardPage.getGreetingText();
         Assert.assertTrue(greetingText.contains("Hello"), "Welcome greeting text pattern context mismatch.");
 
-        // RECTIFIED: Updated value to match the real application calculation rendering
         String bmi = dashboardPage.getBmiValue();
         Assert.assertEquals(bmi, "22.86", "Calculated dashboard user BMI data does not match the target value.");
 
-        // Functional Assertions verifying the exact element arrays loaded in your page model
+        // verifying the exact element arrays loaded in your page model
         Assert.assertTrue(dashboardPage.getLoggedMealsCount() > 0,
                 "Assertion Failed: Today's meal collection grid items (Breakfast, Lunch, etc.) are empty.");
 
@@ -100,11 +93,13 @@ public class SmokeTestSuite {
                 "Assertion Failed: Workout scheduling rows (Cardio, Lower Body, etc.) are missing from display view.");
     }
 
-    @Test(priority = 6, description = "SM_TC_06: Verify navbar links work for logged-in user.")
+    @Test(priority = 6,
+            description = "SM_TC_06: Verify navbar links work for logged-in user.",
+            retryAnalyzer = RetryAnalyzer.class
+    )
     public void testUserNavbarNavigation() {
         driver.get(baseUrl + "/login");
 
-        // RECTIFIED: Using the dynamic shared username
         new LoginPage(driver).login(registeredUsername, "Pass@123");
 
         DashboardPage dashboardPage = new DashboardPage(driver);
@@ -193,10 +188,4 @@ public class SmokeTestSuite {
                 "Admin logout cycle did not clear cleanly back to the home landing page root.");
     }
 
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 }
