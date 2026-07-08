@@ -1,6 +1,5 @@
 package stepdefinitions;
 
-import hooks.Hooks;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -9,6 +8,7 @@ import java.time.Duration;
 import org.testng.Assert;
 
 import pages.LoginPage;
+import utilities.DriverManager;
 
 public class LoginSteps {
 
@@ -17,7 +17,7 @@ public class LoginSteps {
     @Given("User launches the application")
     public void launchApplication() {
 
-        Hooks.driver.get("http://localhost:4200/login");
+        DriverManager.getDriver().get("http://localhost:4200/login");
         loginPage = new LoginPage(Hooks.driver);
     }
 

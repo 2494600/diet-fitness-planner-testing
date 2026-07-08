@@ -12,25 +12,23 @@ import utilities.DriverManager;
 
 public class BaseTest {
 
-    protected WebDriver driver;
-
     @BeforeMethod
     @Parameters("browser")
     public void setUp(String browser) {
 
-        if(browser.equalsIgnoreCase("chrome")){
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        WebDriver webDriver= new ChromeDriver(options);
 
-            WebDriver driver = new ChromeDriver(options);
+        if(browser.equalsIgnoreCase("chrome")){
+            webDriver = new ChromeDriver(options);
         }else if(browser.equalsIgnoreCase("edge")){
-            WebDriver driver = new EdgeDriver();
+            webDriver = new EdgeDriver();
         } else if (browser.equalsIgnoreCase("firefox")) {
-            WebDriver driver = new FirefoxDriver();
+            webDriver = new FirefoxDriver();
         }
 
-        DriverManager.setDriver(driver);
-        driver=DriverManager.getDriver();
+        DriverManager.setDriver(webDriver);
     }
 
 

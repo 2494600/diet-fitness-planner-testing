@@ -2,10 +2,12 @@ package tests;
 
 import listeners.RetryAnalyzer;
 import listeners.TestListener;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
+import utilities.DriverManager;
 
 @Listeners(TestListener.class)
 public class SmokeTestSuite extends BaseTest{
@@ -13,8 +15,11 @@ public class SmokeTestSuite extends BaseTest{
 
     private static String registeredUsername = "johndoe";
 
+
     @Test(priority = 1, description = "SM_TC_01: Verify landing page loads with hero section and features.")
     public void testLandingPageLayout() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/");
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isHeroSectionVisible(), "Hero section container is missing.");
@@ -22,8 +27,10 @@ public class SmokeTestSuite extends BaseTest{
         Assert.assertTrue(landingPage.isCtaButtonVisible(), "Vital entry points are unavailable.");
     }
 
+
     @Test(priority = 2, description = "SM_TC_02: Verify landing page rotating quotes change every 5 seconds.")
     public void testLandingPageQuoteRotation() {
+        WebDriver driver=DriverManager.getDriver();
         driver.get(baseUrl + "/");
         LandingPage landingPage = new LandingPage(driver);
         String initialQuoteText = landingPage.getQuoteText();
@@ -34,6 +41,7 @@ public class SmokeTestSuite extends BaseTest{
 
     @Test(priority = 3, description = "SM_TC_03: Verify new user registration with all valid fields.")
     public void testNewUserRegistration() {
+        WebDriver driver=DriverManager.getDriver();
         driver.get(baseUrl + "/register");
         RegisterPage registerPage = new RegisterPage(driver);
         DashboardPage dashboardPage = new DashboardPage(driver);
@@ -55,6 +63,8 @@ public class SmokeTestSuite extends BaseTest{
             dependsOnMethods = {"testNewUserRegistration"}
     )
     public void testRegisteredUserLogin() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/login");
         LoginPage loginPage = new LoginPage(driver);
         DashboardPage dashboardPage = new DashboardPage(driver);
@@ -68,6 +78,8 @@ public class SmokeTestSuite extends BaseTest{
 
     @Test(priority = 5, description = "SM_TC_05: Verify dashboard displays meals and workouts.")
     public void testDashboardContents() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/login");
         new LoginPage(driver).login(registeredUsername, "Pass@123");
 
@@ -98,6 +110,8 @@ public class SmokeTestSuite extends BaseTest{
             retryAnalyzer = RetryAnalyzer.class
     )
     public void testUserNavbarNavigation() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/login");
 
         new LoginPage(driver).login(registeredUsername, "Pass@123");
@@ -120,6 +134,8 @@ public class SmokeTestSuite extends BaseTest{
 
     @Test(priority = 7, description = "SM_TC_07: Verify logout clears session and redirects.")
     public void testUserLogout() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/login");
         new LoginPage(driver).login(registeredUsername, "Pass@123");
 
@@ -139,6 +155,8 @@ public class SmokeTestSuite extends BaseTest{
 
     @Test(priority = 8, description = "SM_TC_08: Verify admin can login and see admin panel.")
     public void testAdminLogin() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/login");
         LoginPage loginPage = new LoginPage(driver);
         AdminPage adminPage = new AdminPage(driver);
@@ -153,6 +171,8 @@ public class SmokeTestSuite extends BaseTest{
 
     @Test(priority = 9, description = "SM_TC_09: Verify navbar links work for logged-in admin.")
     public void testAdminNavbarNavigation() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/login");
         new LoginPage(driver).login("admin", "admin123");
 
@@ -171,6 +191,8 @@ public class SmokeTestSuite extends BaseTest{
 
     @Test(priority = 10, description = "SM_TC_10: Verify logout clears session and redirects.")
     public void testAdminLogout() {
+        WebDriver driver=DriverManager.getDriver();
+
         driver.get(baseUrl + "/login");
         new LoginPage(driver).login("admin", "admin123");
 

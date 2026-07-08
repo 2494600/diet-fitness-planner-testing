@@ -1,13 +1,14 @@
 package stepdefinitions;
 
-import hooks.Hooks;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.LoginPage;
+import utilities.DriverManager;
 import utilities.ExcelUtil;
 
 import java.time.Duration;
@@ -35,7 +36,7 @@ public class LoginByExcelSteps {
             String username = row[0].toString();
             String password = row[1].toString();
 
-            Hooks.driver.get("http://localhost:4200/login");
+//            Hooks.driver.get("http://localhost:4200/login");
 
             LoginPage loginPage = new LoginPage(Hooks.driver);
 
@@ -53,10 +54,7 @@ public class LoginByExcelSteps {
 
             String currentUrl = Hooks.driver.getCurrentUrl();
 
-            System.out.println(
-                    "Username: " + username +
-                    " | URL: " + currentUrl
-            );
+            System.out.println("Username: " + username +" | URL: " + currentUrl);
 
             Assert.assertTrue(
                     currentUrl.contains("/dashboard")
