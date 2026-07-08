@@ -16,7 +16,9 @@
 
     <test name="Backend RestAssured API Layer Verifications" preserve-order="true">
         <classes>
-            <class name="apitests.FitnessApiTests"/>
+<!--            <class name="apitests.FitnessApiTests"/>-->
+            <class name="tests.SmokeTestSuite"/>
+            <class name="tests.CucumberTestRunner"/>
         </classes>
     </test>
 
