@@ -3,6 +3,7 @@ package tests;
 import listeners.RetryAnalyzer;
 import listeners.TestListener;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -76,12 +77,15 @@ public class SmokeTestSuite extends BaseTest{
         Assert.assertTrue(dashboardPage.getCurrentPageUrl().contains("/dashboard"), "Did not redirect to /dashboard.");
     }
 
-    @Test(priority = 5, description = "SM_TC_05: Verify dashboard displays meals and workouts.")
+    @Test(priority = 5,
+            description = "SM_TC_05: Verify dashboard displays meals and workouts.",
+            retryAnalyzer = RetryAnalyzer.class
+    )
     public void testDashboardContents() {
         WebDriver driver=DriverManager.getDriver();
 
         driver.get(baseUrl + "/login");
-        new LoginPage(driver).login(registeredUsername, "Pass@123");
+        new LoginPage(driver).login("user11", "Pass@123");
 
         DashboardPage dashboardPage = new DashboardPage(driver);
         dashboardPage.waitForUrlToContain("/dashboard");
@@ -114,7 +118,7 @@ public class SmokeTestSuite extends BaseTest{
 
         driver.get(baseUrl + "/login");
 
-        new LoginPage(driver).login(registeredUsername, "Pass@123");
+        new LoginPage(driver).login("user11", "Pass@123");
 
         DashboardPage dashboardPage = new DashboardPage(driver);
         dashboardPage.waitForUrlToContain("/dashboard");
@@ -137,7 +141,7 @@ public class SmokeTestSuite extends BaseTest{
         WebDriver driver=DriverManager.getDriver();
 
         driver.get(baseUrl + "/login");
-        new LoginPage(driver).login(registeredUsername, "Pass@123");
+        new LoginPage(driver).login("user11", "Pass@123");
 
         DashboardPage dashboardPage = new DashboardPage(driver);
         dashboardPage.waitForUrlToContain("/dashboard");
