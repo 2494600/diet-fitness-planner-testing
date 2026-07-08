@@ -11,7 +11,7 @@ import pages.*;
 
 public class SmokeTestSuite {
     private WebDriver driver;
-    private final String baseUrl = "https://diet-and-fitness-planner-5qhw.vercel.app";
+    private final String baseUrl = "http://localhost:4200";
 
     // RECTIFIED: Class-level shared variable to track the dynamically created user across tests
     private static String registeredUsername = "johndoe";

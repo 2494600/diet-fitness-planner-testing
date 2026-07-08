@@ -5,7 +5,7 @@ import org.testng.annotations.BeforeClass;
 
 public class ApiBaseTest {
     // Shared backend API base host path
-    protected final String BASE_URI = "https://diet-and-fitness-planner-5qhw.vercel.app";
+    protected final String BASE_URI = "http://localhost:1010";
 
     @BeforeClass
     public void setupApiConfig() {

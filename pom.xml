@@ -22,6 +22,7 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
+        
 
         <dependency>
             <groupId>org.testng</groupId>
@@ -74,7 +75,29 @@
             <version>5.5.1</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Apache POI OOXML for XSSF (read/write .xlsx) -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.5.1</version>
+            <scope>compile</scope>
+        </dependency>
 
+        <!-- Source: https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-maven</artifactId>
+            <version>3.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.35.3</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
