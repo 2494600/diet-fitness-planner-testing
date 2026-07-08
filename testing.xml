@@ -4,7 +4,7 @@
 
     <test name="Cucumber BDD Feature Validations" preserve-order="true">
         <classes>
-            <class name="runners.SmokeTestRunner"/>
+            <class name="tests.CucumberTestRunner"/>
         </classes>
     </test>
 
@@ -16,9 +16,7 @@
 
     <test name="Backend RestAssured API Layer Verifications" preserve-order="true">
         <classes>
-<!--            <class name="apitests.FitnessApiTests"/>-->
-            <class name="tests.SmokeTestSuite"/>
-            <class name="tests.CucumberTestRunner"/>
+            <class name="apitests.FitnessApiTests"/>
         </classes>
     </test>
 
